@@ -58,7 +58,33 @@ public class DatabaseInitializer implements ApplicationRunner {
         GoalEntity pinturaGeral = goalRepository.save(new GoalEntity("Pinturas em Geral", valor("300.00"), patioEscola));
         ContribuitionEntity c5 = contribuitionRepository.save(new ContribuitionEntity(marcos, pinturaGeral, valor("300")));
         ContribuitionEntity c6 = contribuitionRepository.save(new ContribuitionEntity(roberto, reformaQuadra, valor("600")));
+
+        // suelen
+        UserEntity Larisa = userRepository.save(new UserEntity("lary", "lary123"));
+        ProjectEntity mochila = projectRepository.save(new ProjectEntity("minha mochila ", "", Larisa, ProjectType.PRIVATE));
+        GoalEntity entradaMochila = goalRepository.save(new GoalEntity("Entrada", valor("50.00"), mochila));
+        GoalEntity parcelasmochila = goalRepository.save(new GoalEntity("Parcelas", valor("50.00"), mochila));
+        ContribuitionEntity m1 = contribuitionRepository.save(new ContribuitionEntity(Larisa, parcelasmochila, valor("50.00")));
+        ContribuitionEntity m2 = contribuitionRepository.save(new ContribuitionEntity(Larisa, parcelasmochila, valor("25.00")));
+
+        UserEntity evandro = userRepository.save(new UserEntity("evandro_gatinho", "vandinho123"));
+        ProjectEntity carro= projectRepository.save(new ProjectEntity("rumo a felicidade ", "YBR125",Larisa, ProjectType.SHARED, Arrays.asList(roberto)));
+        GoalEntity entradacarro = goalRepository.save(new GoalEntity("Entrada", valor("5000.00"), carro));
+        GoalEntity parcelascarro1 = goalRepository.save(new GoalEntity("Primeira parcela", valor("1000.00"), carro));
+        GoalEntity parcelascarro2 = goalRepository.save(new GoalEntity("Segunda parcela", valor("1000.00"), carro));
+        ContribuitionEntity m3 = contribuitionRepository.save(new ContribuitionEntity(evandro, parcelascarro1, valor("1000")));
+        ContribuitionEntity m4 = contribuitionRepository.save(new ContribuitionEntity(evandro, entradacarro, valor("300")));
+
+        UserEntity vanesa = userRepository.save(new UserEntity("vanesa_881", "vanesagatinha"));
+        ProjectEntity reformadoquarto = projectRepository.save(new ProjectEntity("Reforma do quarto", "quarto dos sonhos ", vanesa, ProjectType.PUBLIC));
+        GoalEntity reformacasa = goalRepository.save(new GoalEntity("Reforma da casa" , valor("500.00"), reformadoquarto));
+        GoalEntity reformabanheiro = goalRepository.save(new GoalEntity("banheiro", valor("100.00"), reformadoquarto));
+        GoalEntity reformaquarto = goalRepository.save(new GoalEntity("reformar  do quarto", valor("100.00"), reformadoquarto));
+        GoalEntity pinturaCasa = goalRepository.save(new GoalEntity("Pinturas em Geral", valor("100.00"), reformadoquarto));
+        ContribuitionEntity m5 = contribuitionRepository.save(new ContribuitionEntity(evandro, pinturaCasa, valor("100")));
+        ContribuitionEntity m6 = contribuitionRepository.save(new ContribuitionEntity(evandro, reformacasa, valor("500")));
     }
+
 
     private BigDecimal valor(String value) {
         return  new BigDecimal(value);
