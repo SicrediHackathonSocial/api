@@ -56,6 +56,7 @@ public class UserService {
         return LoginResponse.builder()
                 .login(request.getUsername())
                 .build();
+    }
 
     public List<UserEntity> findFollowersByUserLogged(final String username) {
         final UserEntity user = findUserByUsername(username);
