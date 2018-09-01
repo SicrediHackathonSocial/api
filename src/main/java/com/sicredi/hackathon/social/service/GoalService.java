@@ -3,6 +3,7 @@ package com.sicredi.hackathon.social.service;
 import com.sicredi.hackathon.social.dto.request.AddValueGoalRequest;
 import com.sicredi.hackathon.social.dto.request.EditGoalRequest;
 import com.sicredi.hackathon.social.dto.request.RegisterGoalRequest;
+import com.sicredi.hackathon.social.dto.request.RegisterGoalsRequest;
 import com.sicredi.hackathon.social.dto.response.RegisterGoalResponse;
 import com.sicredi.hackathon.social.entity.ContribuitionEntity;
 import com.sicredi.hackathon.social.entity.GoalEntity;
@@ -11,11 +12,14 @@ import com.sicredi.hackathon.social.entity.UserEntity;
 import com.sicredi.hackathon.social.exception.status.NotFoundException;
 import com.sicredi.hackathon.social.repository.ContribuitionRepository;
 import com.sicredi.hackathon.social.repository.GoalRepository;
-import com.sicredi.hackathon.social.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Service
 public class GoalService {
@@ -32,22 +36,26 @@ public class GoalService {
     @Autowired
     private UserService userService;
 
-    public RegisterGoalResponse register(final String username, final RegisterGoalRequest request) {
+    public ResponseEntity register(final String username, final RegisterGoalsRequest request) {
 
         ProjectEntity projectEntity = projectService.find(username, request.getIdProject());
 
-        GoalEntity goalEntity = GoalEntity.builder()
+        List<GoalEntity> goals = request.getGoals().stream()
+                .map(requestGoal -> buildGoalEntity(requestGoal, projectEntity))
+                .collect(Collectors.toList());
+
+
+        goalRepository.saveAll(goals);
+
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    private GoalEntity buildGoalEntity(RegisterGoalRequest request, ProjectEntity projectEntity) {
+        return GoalEntity.builder()
                 .project(projectEntity)
                 .title(request.getTitle())
                 .target(request.getTarget())
                 .build();
-
-        goalEntity = goalRepository.save(goalEntity);
-
-        return RegisterGoalResponse.builder()
-                .id(goalEntity.getId())
-                .build();
-
     }
 
     public ResponseEntity edit(final String username, final EditGoalRequest request) {

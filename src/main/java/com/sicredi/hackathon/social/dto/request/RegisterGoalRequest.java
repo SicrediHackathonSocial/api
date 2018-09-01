@@ -1,6 +1,7 @@
 package com.sicredi.hackathon.social.dto.request;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -9,9 +10,8 @@ import java.math.BigDecimal;
 @Builder
 public class RegisterGoalRequest implements Serializable {
 
-    private static final long serialVersionUID = 9122563379461214978L;
+    private static final long serialVersionUID = -7270994979962436515L;
 
-    private Long idProject;
     private String title;
     private BigDecimal target;
 

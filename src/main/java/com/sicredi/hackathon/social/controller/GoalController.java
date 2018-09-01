@@ -2,8 +2,7 @@ package com.sicredi.hackathon.social.controller;
 
 import com.sicredi.hackathon.social.dto.request.AddValueGoalRequest;
 import com.sicredi.hackathon.social.dto.request.EditGoalRequest;
-import com.sicredi.hackathon.social.dto.request.RegisterGoalRequest;
-import com.sicredi.hackathon.social.dto.response.RegisterGoalResponse;
+import com.sicredi.hackathon.social.dto.request.RegisterGoalsRequest;
 import com.sicredi.hackathon.social.entity.GoalEntity;
 import com.sicredi.hackathon.social.service.GoalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,7 @@ public class GoalController {
     private GoalService goalService;
 
     @PostMapping
-    public RegisterGoalResponse registerGoal(@RequestHeader(value = "Authorization", required = false) final String username, @RequestBody final RegisterGoalRequest request) {
+    public ResponseEntity registerGoal(@RequestHeader(value = "Authorization", required = false) final String username, @RequestBody final RegisterGoalsRequest request) {
         return goalService.register(username, request);
     }
 
