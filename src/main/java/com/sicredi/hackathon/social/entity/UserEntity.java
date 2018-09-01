@@ -7,6 +7,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Getter
 @Builder
@@ -29,4 +30,11 @@ public class UserEntity implements Serializable {
     @Column(nullable = false, length = 30)
     private String password;
 
+    @ManyToMany(mappedBy = "contribuitors")
+    private List<ProjectEntity> projects;
+
+    public UserEntity(final String username, final String password) {
+        this.username = username;
+        this.password = password;
+    }
 }

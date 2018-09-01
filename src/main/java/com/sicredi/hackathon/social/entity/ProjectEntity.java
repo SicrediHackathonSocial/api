@@ -8,6 +8,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -35,12 +36,28 @@ public class ProjectEntity implements Serializable {
     @Column(name = "type", nullable = false)
     private ProjectType type;
 
-    @OneToOne
-    @JoinColumn(name = "id_project", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "id_owner", nullable = false)
     private UserEntity owner;
 
-    @JoinColumn(name = "id_project")
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<UserEntity> contributors;
+    @ManyToMany
+    @JoinTable(name = "project_contribuitors",
+            joinColumns = @JoinColumn(name = "id_project"),
+            inverseJoinColumns = @JoinColumn(name = "id_contribuitor"))
+    private List<UserEntity> contribuitors;
 
+    public ProjectEntity(final String title, final String description, final UserEntity owner, final ProjectType type) {
+        this.title = title;
+        this.description = description;
+        this.owner = owner;
+        this.type = type;
+    }
+
+    public ProjectEntity(final String title, final String description, final UserEntity owner, final ProjectType type, final List<UserEntity> contribuitors) {
+        this.title = title;
+        this.description = description;
+        this.owner = owner;
+        this.type = type;
+        this.contribuitors = contribuitors;
+    }
 }

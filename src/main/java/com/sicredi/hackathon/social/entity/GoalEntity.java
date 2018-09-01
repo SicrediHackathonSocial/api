@@ -1,5 +1,6 @@
 package com.sicredi.hackathon.social.entity;
 
+import com.sicredi.hackathon.social.domain.ProjectType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,8 +31,13 @@ public class GoalEntity implements Serializable {
     @Column(nullable = false)
     private BigDecimal target;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_project")
+    @ManyToOne
+    @JoinColumn(name = "id_project", nullable = false)
     private ProjectEntity project;
 
+    public GoalEntity(final String title, final BigDecimal target, final ProjectEntity project) {
+        this.title = title;
+        this.target = target;
+        this.project = project;
+    }
 }

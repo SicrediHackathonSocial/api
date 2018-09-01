@@ -24,15 +24,20 @@ public class ContribuitionEntity implements Serializable {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @OneToOne
-    @Column(name = "id_contribuitor", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "id_contribuitor", nullable = false)
     private UserEntity contribuitor;
 
-    @OneToOne
-    @Column(name = "id_goal", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "id_goal", nullable = false)
     private GoalEntity goal;
 
     @Column(nullable = false)
-    private BigDecimal target;
+    private BigDecimal value;
 
+    public ContribuitionEntity(final UserEntity contribuitor, final GoalEntity goal, final BigDecimal value) {
+        this.contribuitor = contribuitor;
+        this.goal = goal;
+        this.value = value;
+    }
 }
