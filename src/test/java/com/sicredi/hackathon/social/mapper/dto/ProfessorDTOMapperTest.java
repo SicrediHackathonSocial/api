@@ -1,7 +1,6 @@
 package com.sicredi.hackathon.social.mapper.dto;
 
 import com.sicredi.hackathon.social.dto.ProfessorDTO;
-import com.sicredi.hackathon.social.entity.ProfessorEntity;
 import com.sicredi.hackathon.social.fixture.entity.ProfessorEntityFixture;
 import org.junit.Test;
 import org.junit.runner.RunWith;

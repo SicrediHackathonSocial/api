@@ -3,7 +3,6 @@ package com.sicredi.hackathon.social.mapper.entity;
 
 import com.sicredi.hackathon.social.dto.ProfessorDTO;
 import com.sicredi.hackathon.social.dto.request.professor.CadastrarProfessorRequest;
-import com.sicredi.hackathon.social.entity.ProfessorEntity;
 import com.sicredi.hackathon.social.fixture.dto.ProfessorDTOFixture;
 import com.sicredi.hackathon.social.fixture.dto.request.professor.CadastrarProfessorRequestFixture;
 import org.junit.Test;
