@@ -1,8 +1,11 @@
 package com.sicredi.hackathon.social.service;
 
+import com.sicredi.hackathon.social.dto.request.LoginRequest;
 import com.sicredi.hackathon.social.dto.request.RegisterUserRequest;
+import com.sicredi.hackathon.social.dto.response.LoginResponse;
 import com.sicredi.hackathon.social.entity.ProjectEntity;
 import com.sicredi.hackathon.social.entity.UserEntity;
+import com.sicredi.hackathon.social.exception.status.AttemptLoginException;
 import com.sicredi.hackathon.social.repository.ProjectRepository;
 import com.sicredi.hackathon.social.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,4 +50,12 @@ public class UserService {
         return projectRepository.findAllByOwnerIsNotAndContribuitorsContains(user, user);
     }
 
+    public LoginResponse login(final LoginRequest request) {
+
+        UserEntity user = userRepository.findByUsernameAndAndPassword(request.getUsername(), request.getPassword()).orElseThrow(AttemptLoginException::new);
+
+        return LoginResponse.builder()
+                .login(request.getUsername())
+                .build();
+    }
 }

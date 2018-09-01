@@ -5,8 +5,8 @@ import lombok.Data;
 
 import java.io.Serializable;
 
-@Builder
 @Data
+@Builder
 public class RegisterUserRequest implements Serializable {
 
     private static final long serialVersionUID = -3747350943292946899L;
