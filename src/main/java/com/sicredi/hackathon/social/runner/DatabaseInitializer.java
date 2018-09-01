@@ -83,6 +83,10 @@ public class DatabaseInitializer implements ApplicationRunner {
         GoalEntity pinturaCasa = goalRepository.save(new GoalEntity("Pinturas em Geral", valor("100.00"), reformadoquarto));
         ContribuitionEntity m5 = contribuitionRepository.save(new ContribuitionEntity(evandro, pinturaCasa, valor("100")));
         ContribuitionEntity m6 = contribuitionRepository.save(new ContribuitionEntity(evandro, reformacasa, valor("500")));
+
+        // seguidores
+        vanesa.getFollowers().add(evandro);
+        userRepository.save(vanesa);
     }
 
 

@@ -51,11 +51,19 @@ public class UserService {
     }
 
     public LoginResponse login(final LoginRequest request) {
-
         UserEntity user = userRepository.findByUsernameAndAndPassword(request.getUsername(), request.getPassword()).orElseThrow(AttemptLoginException::new);
 
         return LoginResponse.builder()
                 .login(request.getUsername())
                 .build();
+
+    public List<UserEntity> findFollowersByUserLogged(final String username) {
+        final UserEntity user = findUserByUsername(username);
+        return userRepository.findByFollowingContains(user);
+    }
+
+    public List<UserEntity> findFollowingByUserLogged(final String username) {
+        final UserEntity user = findUserByUsername(username);
+        return userRepository.findByFollowersContains(user);
     }
 }

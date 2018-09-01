@@ -42,7 +42,7 @@ public class UserController {
     }
 
     @GetMapping("/projects/shared")
-    public List<ProjectEntity> findProjectsSharedWithMe(@RequestHeader("auth") String username) {
+    public List<ProjectEntity> findProjectsSharedWithMe(@RequestHeader("Authorization") String username) {
         return userService.findProjectsSharedWithMe(username);
     }
 
@@ -51,5 +51,14 @@ public class UserController {
         return userService.login(request);
     }
 
+    @GetMapping("/followers")
+    public List<UserEntity> findFollowersByUserLogged(@RequestHeader("Authorization") String username) {
+        return userService.findFollowersByUserLogged(username);
+    }
+
+    @GetMapping("/following")
+    public List<UserEntity> findFollowingByUserLogged(@RequestHeader("Authorization") String username) {
+        return userService.findFollowingByUserLogged(username);
+    }
 
 }

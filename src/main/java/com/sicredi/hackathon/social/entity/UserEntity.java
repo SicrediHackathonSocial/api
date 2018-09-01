@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -35,6 +36,18 @@ public class UserEntity implements Serializable {
 
     @Column(nullable = true)
     private String picture;
+
+    @JsonIgnore
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "following",
+            joinColumns = @JoinColumn(name = "id_followed"),
+            inverseJoinColumns = @JoinColumn(name = "id_follower"))
+    private List<UserEntity> followers = new ArrayList<>();
+
+    @JsonIgnore
+    @ManyToMany(mappedBy = "followers")
+    private List<UserEntity> following = new ArrayList<>();
+
 
     public UserEntity(final String username, final String password) {
         this.username = username;
