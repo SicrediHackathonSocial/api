@@ -14,7 +14,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @Entity
-@Table(name = "goal")
+@Table(name = "project")
 @ToString
 public class ProjectEntity implements Serializable {
 
