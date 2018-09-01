@@ -31,6 +31,6 @@ public class ArcApiApplication {
     }
 
     private Predicate<String> paths() {
-        return regex("/rest/.*");
+        return regex("/.*");
     }
 }

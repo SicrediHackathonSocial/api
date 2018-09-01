@@ -17,7 +17,7 @@ São pré-requisitos deste projeto:
 ### Lista de serviços da api
 
 Execute a api localmente e acesse o seguinte link:
-`http://localhost:8080/agc/swagger-ui.html`
+`http://localhost:8080/arc/swagger-ui.html`
 
 ### Setup inicial
 ```
