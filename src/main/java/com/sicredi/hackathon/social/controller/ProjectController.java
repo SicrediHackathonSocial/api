@@ -1,63 +1,41 @@
 package com.sicredi.hackathon.social.controller;
 
 
-import com.sicredi.hackathon.social.dto.request.*;
-import com.sicredi.hackathon.social.dto.response.RegisterGoalResponse;
+import com.sicredi.hackathon.social.dto.request.EditProjectRequest;
+import com.sicredi.hackathon.social.dto.request.RegisterProjectRequest;
 import com.sicredi.hackathon.social.dto.response.RegisterProjectResponse;
-import com.sicredi.hackathon.social.entity.GoalEntity;
 import com.sicredi.hackathon.social.entity.ProjectEntity;
+import com.sicredi.hackathon.social.service.ProjectService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/project")
+@RequestMapping("/projects")
 public class ProjectController {
 
+    @Autowired
+    private ProjectService projectService;
+
     @PostMapping
-    public RegisterProjectResponse registerProject(RegisterProjectRequest request) {
-        return null;
+    public RegisterProjectResponse registerProject(@RequestHeader(value = "Authorization", required = false) final String username, @RequestBody final RegisterProjectRequest request) {
+        return projectService.register(username, request);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity editProject(String id, EditProjectRequest request) {
-        return null;
+    @PutMapping
+    public ResponseEntity editProject(@RequestHeader(value = "Authorization", required = false) final String username, @RequestBody final EditProjectRequest request) {
+        return projectService.edit(username, request);
     }
 
     @GetMapping("/{id}")
-    public ProjectEntity findProject(Integer id) {
-        return null;
+    public ProjectEntity findProject(@RequestHeader(value = "Authorization", required = false) final String username, @PathVariable("id") final Long id) {
+        return projectService.find(username, id);
     }
 
     @DeleteMapping("/{id}")
-    public ProjectEntity deleteProject(Integer id) {
-        return null;
+    public ProjectEntity deleteProject(@RequestHeader(value = "Authorization", required = false) final String username, @PathVariable("id") final Long id) {
+        return projectService.delete(username, id);
     }
-
-    @PostMapping("/{idProject}/goal")
-    public RegisterGoalResponse registerGoal(Integer idProject, RegisterGoalRequest request) {
-        return null;
-    }
-
-    @PutMapping("/{idProject}/goal/{id}")
-    public ResponseEntity editGoal(Integer idProject, EditGoalRequest request) {
-        return null;
-    }
-
-    @GetMapping("/{idProject}/goal/{id}")
-    public GoalEntity findGoal(Integer idProject, Integer idGoal) {
-        return null;
-    }
-
-    @DeleteMapping("/{idProject}/goal/{id}")
-    public GoalEntity deleteGoal(Integer idProject, Integer idGoal) {
-        return null;
-    }
-
-    @PutMapping("/{idProject}/goal/{id}/value")
-    public ResponseEntity addValue(Integer idProject, Integer idGoal, AddValueGoalRequest request) {
-        return null;
-    }
-
 
 }

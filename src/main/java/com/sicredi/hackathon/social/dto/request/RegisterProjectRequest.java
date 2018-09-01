@@ -1,17 +1,18 @@
 package com.sicredi.hackathon.social.dto.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.ToString;
+import com.sicredi.hackathon.social.domain.ProjectType;
+import lombok.*;
 
 import java.io.Serializable;
 
-@Getter
+@Data
 @Builder
-@ToString
-@AllArgsConstructor
 public class RegisterProjectRequest implements Serializable {
 
+    private static final long serialVersionUID = -5285321423835750466L;
+
+    private String title;
+    private String description;
+    private ProjectType type;
 
 }

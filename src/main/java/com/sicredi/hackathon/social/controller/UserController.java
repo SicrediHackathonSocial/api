@@ -1,6 +1,8 @@
 package com.sicredi.hackathon.social.controller;
 
+import com.sicredi.hackathon.social.dto.request.LoginRequest;
 import com.sicredi.hackathon.social.dto.request.RegisterUserRequest;
+import com.sicredi.hackathon.social.dto.response.LoginResponse;
 import com.sicredi.hackathon.social.entity.ProjectEntity;
 import com.sicredi.hackathon.social.entity.UserEntity;
 import com.sicredi.hackathon.social.service.UserService;
@@ -42,6 +44,11 @@ public class UserController {
     @GetMapping("/projects/shared")
     public List<ProjectEntity> findProjectsSharedWithMe(@RequestHeader("auth") String username) {
         return userService.findProjectsSharedWithMe(username);
+    }
+
+    @PostMapping("/login")
+    public LoginResponse login(@RequestBody final LoginRequest request){
+        return userService.login(request);
     }
 
 
