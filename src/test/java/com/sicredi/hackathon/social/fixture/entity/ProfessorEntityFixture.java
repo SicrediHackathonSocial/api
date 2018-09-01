@@ -1,6 +1,5 @@
 package com.sicredi.hackathon.social.fixture.entity;
 
-import com.sicredi.hackathon.social.entity.ProfessorEntity;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
 
