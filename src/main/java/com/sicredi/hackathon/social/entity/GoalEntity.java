@@ -1,10 +1,7 @@
 package com.sicredi.hackathon.social.entity;
 
 import com.sicredi.hackathon.social.domain.ProjectType;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,12 +10,14 @@ import java.math.BigDecimal;
 @Getter
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "goal")
 @ToString
 public class GoalEntity implements Serializable {
 
-    private static final long serialVersionUID = -6209633616891908052L;
+
+    private static final long serialVersionUID = -6207389170048991762L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
