@@ -31,7 +31,7 @@ public class ProjectEntity implements Serializable {
     @Column(nullable = false, length = 50)
     private String title;
 
-    @Column(nullable = false, length = 1000)
+    @Column(nullable = true, length = 1000)
     private String description;
 
     @Column(nullable = false)
