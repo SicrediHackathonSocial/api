@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/projects")
@@ -29,13 +31,23 @@ public class ProjectController {
     }
 
     @GetMapping("/{id}")
-    public ProjectEntity findProject(@RequestHeader(value = "Authorization", required = false) final String username, @PathVariable("id") final Long id) {
-        return projectService.find(username, id);
+    public ProjectEntity findProject(@PathVariable("id") final Long id) {
+        return projectService.find(id);
     }
 
     @DeleteMapping("/{id}")
     public ProjectEntity deleteProject(@RequestHeader(value = "Authorization", required = false) final String username, @PathVariable("id") final Long id) {
         return projectService.delete(username, id);
+    }
+
+    @GetMapping("/public/random")
+    public ProjectEntity findOnePublicProject(@RequestHeader("Authorization") final String username) {
+        return projectService.findOnePublicProject(username);
+    }
+
+    @GetMapping("/public")
+    public List<ProjectEntity> findPublicProjects() {
+        return projectService.findAllPublic();
     }
 
 }
