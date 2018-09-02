@@ -226,7 +226,7 @@ public class DatabaseInitializer implements ApplicationRunner {
 
 
         ProjectEntity tecc = projectRepository.save(new ProjectEntity("Projeto Tecnologia na comunidade", "Escola Marista I. Jaime Biazus", fachi, ProjectType.PUBLIC));
-        GoalEntity cabos = goalRepository.save(new GoalEntity("Combra de cabos de redes, vga, cabo munitor", valor("600.00"), tecc));
+        GoalEntity cabos = goalRepository.save(new GoalEntity("Compra de cabos de redes", valor("600.00"), tecc));
         GoalEntity telas = goalRepository.save(new GoalEntity("Compra de telas", valor("1000.00"), tecc));
         GoalEntity cpus = goalRepository.save(new GoalEntity("Compra de cpus", valor("2000.00"), tecc));
         GoalEntity teclados = goalRepository.save(new GoalEntity("Compra de teclados", valor("500.00"), tecc));
