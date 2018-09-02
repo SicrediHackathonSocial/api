@@ -35,43 +35,43 @@ public class DatabaseInitializer implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        UserEntity roberto = userRepository.save(new UserEntity("betinho", "poc123"));
-        UserEntity marcos = userRepository.save(new UserEntity("marquinhos", "123456"));
-        UserEntity bianca = userRepository.save(new UserEntity("bia_gatinha_88", "biaforever"));
-        UserEntity Larisa = userRepository.save(new UserEntity("lary", "lary123"));
-        UserEntity evandro = userRepository.save(new UserEntity("evandro_gatinho", "vandinho123"));
-        UserEntity vanesa = userRepository.save(new UserEntity("vanesa_881", "vanesagatinha"));
-        UserEntity berenice = userRepository.save(new UserEntity("bere_power", "33665520"));
-        UserEntity rafaela = userRepository.save(new UserEntity("rafaquenn", "rr1234"));
-        UserEntity julio = userRepository.save(new UserEntity("julio_ele", "vivavida"));
-        UserEntity felizardo = userRepository.save(new UserEntity("happyzardo", "feliz4567"));
-        UserEntity joao = userRepository.save(new UserEntity("joaozito", "jojo12"));
-        UserEntity catia = userRepository.save(new UserEntity("Ca_Santos", "santosss"));
-        UserEntity fran = userRepository.save(new UserEntity("fran", "123456"));
-        UserEntity luis = userRepository.save(new UserEntity("luisinho", "ll1234"));
-        UserEntity carla = userRepository.save(new UserEntity("carlaroberta", "umataldecarla"));
-        UserEntity amanda = userRepository.save(new UserEntity("Amandaama", "ama5555"));
-        UserEntity rosane = userRepository.save(new UserEntity("rose", "rose123"));
-        UserEntity carol = userRepository.save(new UserEntity("Carolzinha", "123o456"));
-        UserEntity luan = userRepository.save(new UserEntity("Luan_gatinho", "luan952"));
-        UserEntity eduarda = userRepository.save(new UserEntity("Duda_socão", "eduarda123"));
+        UserEntity bianca = userRepository.save(new UserEntity("Bianca", "teste123"));
+        UserEntity Larisa = userRepository.save(new UserEntity("Larisa", "teste123"));
+        UserEntity evandro = userRepository.save(new UserEntity("Evandro", "teste123"));
+        UserEntity vanesa = userRepository.save(new UserEntity("Vanesa", "teste123"));
+        UserEntity berenice = userRepository.save(new UserEntity("Berenice", "teste123"));
+        UserEntity rafaela = userRepository.save(new UserEntity("Rafaela", "teste123"));
+        UserEntity julio = userRepository.save(new UserEntity("Julio", "teste123"));
+        UserEntity felizardo = userRepository.save(new UserEntity("happyzardo", "teste123"));
+        UserEntity joao = userRepository.save(new UserEntity("joaozito", "teste123"));
+        UserEntity catia = userRepository.save(new UserEntity("Ca_Santos", "teste123"));
+        UserEntity fran = userRepository.save(new UserEntity("fran", "teste123"));
+        UserEntity luis = userRepository.save(new UserEntity("luisinho", "teste123"));
+        UserEntity carla = userRepository.save(new UserEntity("carlaroberta", "teste123"));
+        UserEntity amanda = userRepository.save(new UserEntity("Amandaama", "teste123"));
+        UserEntity rosane = userRepository.save(new UserEntity("rose", "teste123"));
+        UserEntity carol = userRepository.save(new UserEntity("Carolzinha", "teste123"));
+        UserEntity luan = userRepository.save(new UserEntity("Luan", "teste123"));
+        UserEntity eduarda = userRepository.save(new UserEntity("Duda_socão", "teste123"));
 
-        UserEntity fachi = userRepository.save(new UserEntity("irmao_fachi", "45678"));
-        UserEntity robson = userRepository.save(new UserEntity("robson", "ronson123"));
-        UserEntity ana = userRepository.save(new UserEntity("ana_ama", "analuiza"));
-        UserEntity sandra = userRepository.save(new UserEntity("sandra", "pedromozão"));
-        UserEntity pedro = userRepository.save(new UserEntity("pedro", "mcpedrinho"));
-        UserEntity daniel = userRepository.save(new UserEntity("DanielCastro", "dani12"));
+        UserEntity fachi = userRepository.save(new UserEntity("irmao_fachi", "teste123"));
+        UserEntity robson = userRepository.save(new UserEntity("robson", "teste123"));
+        UserEntity ana = userRepository.save(new UserEntity("ana_ama", "teste123"));
+        UserEntity sandra = userRepository.save(new UserEntity("sandra", "teste123"));
+        UserEntity pedro = userRepository.save(new UserEntity("pedro", "teste123"));
+        UserEntity daniel = userRepository.save(new UserEntity("DanielCastro", "teste123"));
 
 
-        UserEntity peter = userRepository.save(new UserEntity("Peter", "Peter"));
-        UserEntity brenda = userRepository.save(new UserEntity("Brenda", "Brenda"));
-        UserEntity arcuser = userRepository.save(new UserEntity("Arc", "Arc"));
-        UserEntity clarissa = userRepository.save(new UserEntity("Clarissa", "Clarissa"));
-        UserEntity joao2 = userRepository.save(new UserEntity("João", "João"));
-        UserEntity anelise = userRepository.save(new UserEntity("Anelise", "Anelise"));
-        UserEntity suelen = userRepository.save(new UserEntity("Suelen", "Suelen"));
-        UserEntity gustavo = userRepository.save(new UserEntity("Gustavo", "Gustavo"));
+        UserEntity roberto = userRepository.save(new UserEntity("Roberto", "teste123"));
+        UserEntity marcos = userRepository.save(new UserEntity("Marcos", "teste123"));
+        UserEntity peter = userRepository.save(new UserEntity("Peter", "teste123"));
+        UserEntity brenda = userRepository.save(new UserEntity("Brenda", "teste123"));
+        UserEntity arcuser = userRepository.save(new UserEntity("Arc", "teste123"));
+        UserEntity clarissa = userRepository.save(new UserEntity("Clarissa", "teste123"));
+        UserEntity joao2 = userRepository.save(new UserEntity("João", "teste123"));
+        UserEntity anelise = userRepository.save(new UserEntity("Anelise", "teste123"));
+        UserEntity suelen = userRepository.save(new UserEntity("Suelen", "teste123"));
+        UserEntity gustavo = userRepository.save(new UserEntity("Gustavo", "teste123"));
 
 
         ProjectEntity ajuda = projectRepository.save(new ProjectEntity("Ajude a ARC - 09/2018", "Ajuda a ARC", arcuser, ProjectType.PUBLIC));
@@ -201,7 +201,7 @@ public class DatabaseInitializer implements ApplicationRunner {
         ContribuitionEntity z3 = contribuitionRepository.save(new ContribuitionEntity(marcos, parcelasMotog5plus1, valor("100")));
         ContribuitionEntity z4 = contribuitionRepository.save(new ContribuitionEntity(roberto, parcelasMotog5plus2, valor("10")));
 
-        ProjectEntity duas= projectRepository.save(new ProjectEntity("Duas mãos quatro pratas!", "Contribua para nossos cachorrinhos e gatinhos", luan, ProjectType.PUBLIC));
+        ProjectEntity duas= projectRepository.save(new ProjectEntity("Duas Mãos Quatro Patas!", "Contribua para nossos cachorrinhos e gatinhos", luan, ProjectType.PUBLIC));
         GoalEntity raçãocatfilhote = goalRepository.save(new GoalEntity("Ração p/ cahorros filhotes ", valor("50.00"), duas ));
         GoalEntity raçãodogfilhote= goalRepository.save(new GoalEntity("Ração p/ gatos filhotes", valor("50.00"),  duas));
         GoalEntity raçãocatadulto = goalRepository.save(new GoalEntity("Ração p/ cachorros adultos", valor("100.00"), duas));
