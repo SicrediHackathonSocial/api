@@ -7,6 +7,8 @@ import java.io.Serializable;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class EditProjectRequest implements Serializable {
 
     private static final long serialVersionUID = -1982409998890677958L;

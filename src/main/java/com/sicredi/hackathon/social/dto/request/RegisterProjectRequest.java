@@ -7,6 +7,8 @@ import java.io.Serializable;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class RegisterProjectRequest implements Serializable {
 
     private static final long serialVersionUID = -5285321423835750466L;
