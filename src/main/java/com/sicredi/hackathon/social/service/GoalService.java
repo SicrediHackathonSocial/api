@@ -25,6 +25,8 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.sicredi.hackathon.social.domain.GoalStatus.EM_ANDAMENTO;
+
 @Service
 public class GoalService {
 
@@ -62,6 +64,7 @@ public class GoalService {
                 .project(projectEntity)
                 .title(request.getTitle())
                 .target(request.getTarget())
+                .status(EM_ANDAMENTO)
                 .build();
     }
 
