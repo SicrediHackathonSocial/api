@@ -200,6 +200,20 @@ public class DatabaseInitializer implements ApplicationRunner {
         ContribuitionEntity m9 = contribuitionRepository.save(new ContribuitionEntity(Larisa, parcelasmochiladabarby, valor("50.00")));
         ContribuitionEntity m10 = contribuitionRepository.save(new ContribuitionEntity(eduarda, parcelasmochiladabarby, valor("25.00")));
 
+        UserEntity xuliana = userRepository.save(new UserEntity("xuliana_mulher_do_pedro", "pedromozão"));
+        ProjectEntity comprarcasa = projectRepository.save(new ProjectEntity("meu carro", "", xuliana, ProjectType.PRIVATE));
+        GoalEntity entradacasa = goalRepository.save(new GoalEntity("Entrada", valor("5000.00"), comprarcasa));
+        GoalEntity parcelascasa = goalRepository.save(new GoalEntity("Parcelas", valor("1000.00"), comprarcasa));
+        ContribuitionEntity x23 = contribuitionRepository.save(new ContribuitionEntity(xuliana, entradacasa, valor("5000")));
+        ContribuitionEntity x24 = contribuitionRepository.save(new ContribuitionEntity(xuliana, parcelascasa, valor("3000")));
+
+        UserEntity pedrinho = userRepository.save(new UserEntity("pedrodrinho", "mcpedrinho"));
+        ProjectEntity comprarcarronovo = projectRepository.save(new ProjectEntity("carro dos sonhos ", "", pedrinho, ProjectType.PRIVATE));
+        GoalEntity entradacarronovo = goalRepository.save(new GoalEntity("Entrada", valor("5000.00"), comprarcarronovo));
+        GoalEntity parcelascarronovo = goalRepository.save(new GoalEntity("Parcelas", valor("1000.00"), comprarcarronovo));
+        ContribuitionEntity p28 = contribuitionRepository.save(new ContribuitionEntity(pedrinho, entradacarronovo, valor("5000")));
+        ContribuitionEntity p29 = contribuitionRepository.save(new ContribuitionEntity(pedrinho, parcelascarronovo, valor("5000")));
+
         amanda.getFollowers().add(luis);
         amanda.getFollowers().add(carla);
         amanda.getFollowers().add(berenice);
@@ -331,6 +345,23 @@ public class DatabaseInitializer implements ApplicationRunner {
         catia.getFollowers().add(joao);
         catia.getFollowers().add(fran);
         userRepository.save(catia);
+
+        pedrinho.getFollowers().add(luis);
+        pedrinho.getFollowers().add(carla);
+        pedrinho.getFollowers().add(amanda);
+        pedrinho.getFollowers().add(berenice);
+        pedrinho.getFollowers().add(sandra);
+        pedrinho.getFollowers().add(rafaela);
+        pedrinho.getFollowers().add(julio);
+        pedrinho.getFollowers().add(felizardo);
+        pedrinho.getFollowers().add(joao);
+        pedrinho.getFollowers().add(catia);
+        pedrinho.getFollowers().add(fran);
+        pedrinho.getFollowers().add(evandro);
+        pedrinho.getFollowers().add(eduarda);
+        pedrinho.getFollowers().add(marcos);
+        pedrinho.getFollowers().add(sandra);
+        userRepository.save(pedrinho);
     }
 
 
