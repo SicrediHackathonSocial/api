@@ -14,6 +14,4 @@ public class AddValueGoalRequest implements Serializable {
     private Long idGoal;
     private BigDecimal value;
 
-
-
 }

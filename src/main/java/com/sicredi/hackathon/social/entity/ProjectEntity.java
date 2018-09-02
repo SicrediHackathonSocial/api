@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,6 +30,9 @@ public class ProjectEntity implements Serializable {
 
     @Column(nullable = false, length = 1000)
     private String description;
+
+    @Column(nullable = false)
+    private LocalDate created;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
@@ -60,5 +64,10 @@ public class ProjectEntity implements Serializable {
         this.owner = owner;
         this.type = type;
         this.contribuitors = contribuitors;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        created = LocalDate.now();
     }
 }
