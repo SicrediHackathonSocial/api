@@ -3,6 +3,7 @@ package com.sicredi.hackathon.social.controller;
 
 import com.sicredi.hackathon.social.dto.request.EditProjectRequest;
 import com.sicredi.hackathon.social.dto.request.RegisterProjectRequest;
+import com.sicredi.hackathon.social.dto.response.EstimatedConclusionDateResponse;
 import com.sicredi.hackathon.social.dto.response.RegisterProjectResponse;
 import com.sicredi.hackathon.social.entity.ProjectEntity;
 import com.sicredi.hackathon.social.service.ProjectService;
@@ -54,6 +55,11 @@ public class ProjectController {
     @GetMapping("/public")
     public List<ProjectEntity> findPublicProjects() {
         return projectService.findAllPublic();
+    }
+
+    @GetMapping("/{id}/estimate/conclusion")
+    public EstimatedConclusionDateResponse estimateConclusionDate(@RequestHeader(value = "Authorization", required = false) final String username, @PathVariable("id") final Long id){
+        return projectService.estimateConclusionDate(username, id);
     }
 
 }

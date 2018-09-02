@@ -57,7 +57,7 @@ public class GoalEntity implements Serializable {
     }
 
     @JsonProperty("reached")
-    private BigDecimal reached() {
+    public BigDecimal reached() {
         return getContribuitions().stream().map(ContribuitionEntity::getValue).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 

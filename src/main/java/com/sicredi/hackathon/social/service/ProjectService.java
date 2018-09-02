@@ -4,7 +4,9 @@ import com.sicredi.hackathon.social.domain.ProjectStatus;
 import com.sicredi.hackathon.social.domain.ProjectType;
 import com.sicredi.hackathon.social.dto.request.EditProjectRequest;
 import com.sicredi.hackathon.social.dto.request.RegisterProjectRequest;
+import com.sicredi.hackathon.social.dto.response.EstimatedConclusionDateResponse;
 import com.sicredi.hackathon.social.dto.response.RegisterProjectResponse;
+import com.sicredi.hackathon.social.entity.ContribuitionEntity;
 import com.sicredi.hackathon.social.entity.GoalEntity;
 import com.sicredi.hackathon.social.entity.ProjectEntity;
 import com.sicredi.hackathon.social.entity.UserEntity;
@@ -18,8 +20,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 @Service
 public class ProjectService {
@@ -32,6 +39,8 @@ public class ProjectService {
 
     @Autowired
     private UserService userService;
+
+    private static final Integer DAYS_AVG_CONTRIBUITIONS = 30;
 
     public RegisterProjectResponse register(final String username, final RegisterProjectRequest request) {
 
@@ -79,7 +88,7 @@ public class ProjectService {
 
         Integer random = new Random().nextInt();
         System.out.println("Random " + random);
-        if (random % 2 == 0 && !usernameOwner.equalsIgnoreCase("ARC")){
+        if (random % 2 == 0 && !usernameOwner.equalsIgnoreCase("ARC")) {
             publics = projectRepository.findAllByOwner_Username("ARC");
             return publics.stream()
                     .filter(p -> !p.getContribuitors().contains(user) && !isUserContribuitor(user, p.getGoals()))
@@ -97,7 +106,7 @@ public class ProjectService {
         }
     }
 
-    private Boolean isUserContribuitor(final UserEntity user, final List<GoalEntity> goals){
+    private Boolean isUserContribuitor(final UserEntity user, final List<GoalEntity> goals) {
         return goals.stream()
                 .anyMatch(g -> g.getContribuitions().stream().anyMatch(c -> c.getContribuitor().equals(user)));
     }
@@ -133,5 +142,31 @@ public class ProjectService {
         project.getContribuitors().add(user);
         projectRepository.save(project);
     }
+
+    public EstimatedConclusionDateResponse estimateConclusionDate(final String username, final Long id) {
+        ProjectEntity project = projectRepository.findByIdAndOwner_Username(id, username).orElseThrow(ForbiddenException::new);
+
+        final List<ContribuitionEntity> contribuitions = new ArrayList<>();
+
+        project.getGoals().forEach(goal -> contribuitions.addAll(goal.getContribuitions()));
+
+        BigDecimal sumAllContributions = contribuitions.stream()
+                .map(ContribuitionEntity::getValue)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        BigDecimal avgMonth = sumAllContributions.divide(BigDecimal.valueOf(contribuitions.size()), BigDecimal.ROUND_HALF_DOWN);
+
+        BigDecimal left = project.getGoals().stream().map(GoalEntity::getTarget).reduce(BigDecimal.ZERO, BigDecimal::add).subtract(sumAllContributions);
+
+        left = left.max(BigDecimal.ZERO);
+
+        BigDecimal months = left.divide(avgMonth, BigDecimal.ROUND_HALF_DOWN);
+
+        return EstimatedConclusionDateResponse.builder()
+                .average(sumAllContributions)
+                .date(LocalDate.now().plusMonths(months.intValue()))
+                .build();
+    }
+
 }
 

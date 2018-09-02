@@ -368,6 +368,7 @@ public class DatabaseInitializer implements ApplicationRunner {
         pedrinho.getFollowers().add(marcos);
         pedrinho.getFollowers().add(sandra);
         userRepository.save(pedrinho);
+
     }
 
 

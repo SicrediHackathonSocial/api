@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ProjectRepository extends JpaRepository<ProjectEntity, Long> {
@@ -16,6 +17,8 @@ public interface ProjectRepository extends JpaRepository<ProjectEntity, Long> {
     List<ProjectEntity> findAllByOwner_Username(String username);
 
     List<ProjectEntity> findAllByOwner_UsernameAndType(String username, ProjectType type);
+
+    Optional<ProjectEntity> findByIdAndOwner_Username(Long id, String username);
 
     List<ProjectEntity> findAllByOwnerIsNotAndContribuitorsContains(UserEntity user1, UserEntity user2);
 
