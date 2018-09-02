@@ -35,7 +35,7 @@ public class ProjectEntity implements Serializable {
     private String description;
 
     @Column(nullable = false)
-    private LocalDate created;
+    private LocalDate createdDate;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
@@ -78,6 +78,6 @@ public class ProjectEntity implements Serializable {
 
     @PrePersist
     protected void onCreate() {
-        created = LocalDate.now();
+        createdDate = LocalDate.now();
     }
 }

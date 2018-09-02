@@ -6,6 +6,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Getter
 @Builder
@@ -27,6 +28,9 @@ public class ContribuitionEntity implements Serializable {
     @JoinColumn(name = "id_contribuitor", nullable = false)
     private UserEntity contribuitor;
 
+    @Column(nullable = false)
+    private LocalDate date;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "id_goal", nullable = false)
@@ -39,5 +43,10 @@ public class ContribuitionEntity implements Serializable {
         this.contribuitor = contribuitor;
         this.goal = goal;
         this.value = value;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        date = LocalDate.now();
     }
 }
