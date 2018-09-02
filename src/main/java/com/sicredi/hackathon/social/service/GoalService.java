@@ -45,7 +45,7 @@ public class GoalService {
 
     public ResponseEntity register(final String username, final RegisterGoalsRequest request) {
 
-        ProjectEntity projectEntity = projectService.find(username, request.getIdProject());
+        ProjectEntity projectEntity = projectService.find(request.getIdProject());
 
         List<GoalEntity> goals = request.getGoals().stream()
                 .map(requestGoal -> buildGoalEntity(requestGoal, projectEntity))
@@ -66,7 +66,7 @@ public class GoalService {
     }
 
     public ResponseEntity edit(final String username, final EditGoalRequest request) {
-        ProjectEntity projectEntity = projectService.find(username, request.getIdProject());
+        ProjectEntity projectEntity = projectService.find(request.getIdProject());
 
         GoalEntity goalEntity = GoalEntity.builder()
                 .id(request.getId())

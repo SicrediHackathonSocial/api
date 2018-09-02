@@ -1,23 +1,31 @@
 package com.sicredi.hackathon.social.service;
 
 import com.sicredi.hackathon.social.domain.ProjectStatus;
+import com.sicredi.hackathon.social.domain.ProjectType;
 import com.sicredi.hackathon.social.dto.request.EditProjectRequest;
 import com.sicredi.hackathon.social.dto.request.RegisterProjectRequest;
 import com.sicredi.hackathon.social.dto.response.RegisterProjectResponse;
+import com.sicredi.hackathon.social.entity.GoalEntity;
 import com.sicredi.hackathon.social.entity.ProjectEntity;
 import com.sicredi.hackathon.social.entity.UserEntity;
 import com.sicredi.hackathon.social.exception.status.NotFoundException;
+import com.sicredi.hackathon.social.repository.ContribuitionRepository;
 import com.sicredi.hackathon.social.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProjectService {
 
     @Autowired
     private ProjectRepository projectRepository;
+
+    @Autowired
+    private ContribuitionRepository contribuitionRepository;
 
     @Autowired
     private UserService userService;
@@ -54,8 +62,30 @@ public class ProjectService {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    public ProjectEntity find(final String username, final Long id) {
+    public ProjectEntity find(final Long id) {
         return projectRepository.findById(id).orElseThrow(NotFoundException::new);
+    }
+
+    public ProjectEntity findOnePublicProject(final String usernameOwner) {
+
+        final UserEntity user = userService.findUserByUsername(usernameOwner);
+        final List<ProjectEntity> publics = projectRepository.findAllByTypeWithoutUser(ProjectType.PUBLIC, usernameOwner);
+
+        return publics.stream()
+                .filter(p -> !p.getContribuitors().contains(user) && !isUserContribuitor(user, p.getGoals()))
+                .findFirst()
+                .orElseGet(null);
+    }
+
+    private Boolean isUserContribuitor(final UserEntity user, final List<GoalEntity> goals){
+        return goals.stream()
+                .filter(g -> g.getContribuitions().stream().filter(c -> c.getContribuitor().equals(user)).findFirst().isPresent())
+                .findFirst()
+                .isPresent();
+    }
+
+    public List<ProjectEntity> findAllPublic() {
+        return projectRepository.findAllByType(ProjectType.PUBLIC);
     }
 
     public ProjectEntity delete(final String username, final Long id) {
