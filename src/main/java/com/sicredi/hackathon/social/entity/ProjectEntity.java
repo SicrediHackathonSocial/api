@@ -1,5 +1,6 @@
 package com.sicredi.hackathon.social.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sicredi.hackathon.social.domain.ProjectStatus;
 import com.sicredi.hackathon.social.domain.ProjectType;
 import lombok.*;
@@ -37,12 +38,6 @@ public class ProjectEntity implements Serializable {
 
     @Column(nullable = false)
     private LocalDate createdDate;
-
-    @Transient
-    private BigDecimal target;
-
-    @Transient
-    private BigDecimal reached;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)
@@ -86,5 +81,19 @@ public class ProjectEntity implements Serializable {
     @PrePersist
     protected void onCreate() {
         createdDate = LocalDate.now();
+    }
+
+    @JsonProperty("reached")
+    private BigDecimal reached() {
+        getGoals().forEach(goal -> {
+            goal.setReached(goal.getContribuitions().stream().map(ContribuitionEntity::getValue).reduce(BigDecimal.ZERO, BigDecimal::add));
+        });
+
+        return getGoals().stream().map(GoalEntity::getReached).reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
+    @JsonProperty("target")
+    private BigDecimal target() {
+        return getGoals().stream().map(GoalEntity::getTarget).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }
