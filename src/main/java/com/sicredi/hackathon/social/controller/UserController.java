@@ -32,7 +32,7 @@ public class UserController {
     }
 
     @GetMapping("/projects")
-    public List<ProjectEntity> findProjectsByUserLogged(@RequestHeader("auth") String username) {
+    public List<ProjectEntity> findProjectsByUserLogged(@RequestHeader("Authorization") String username) {
         return userService.findProjectsByUserLogged(username);
     }
 

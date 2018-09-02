@@ -1,11 +1,13 @@
 package com.sicredi.hackathon.social.service;
 
+import com.sicredi.hackathon.social.domain.ProjectType;
 import com.sicredi.hackathon.social.dto.request.LoginRequest;
 import com.sicredi.hackathon.social.dto.request.RegisterUserRequest;
 import com.sicredi.hackathon.social.dto.response.LoginResponse;
 import com.sicredi.hackathon.social.entity.ProjectEntity;
 import com.sicredi.hackathon.social.entity.UserEntity;
 import com.sicredi.hackathon.social.exception.status.AttemptLoginException;
+import com.sicredi.hackathon.social.exception.status.NotFoundException;
 import com.sicredi.hackathon.social.repository.ProjectRepository;
 import com.sicredi.hackathon.social.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +36,7 @@ public class UserService {
     }
 
     public UserEntity findUserByUsername(final String username) {
-        return userRepository.findByUsername(username);
+        return userRepository.findByUsername(username).orElseThrow(NotFoundException::new);
     }
 
     public List<ProjectEntity> findProjectsByUserLogged(final String username) {
@@ -42,7 +44,7 @@ public class UserService {
     }
 
     public List<ProjectEntity> findProjectsPublicByUsername(final String username) {
-        return projectRepository.findProjectsPublicByUsername(username);
+        return projectRepository.findAllByOwner_UsernameAndType(username, ProjectType.PUBLIC);
     }
 
     public List<ProjectEntity> findProjectsSharedWithMe(final String username) {
@@ -51,7 +53,7 @@ public class UserService {
     }
 
     public LoginResponse login(final LoginRequest request) {
-        UserEntity user = userRepository.findByUsernameAndAndPassword(request.getUsername(), request.getPassword()).orElseThrow(AttemptLoginException::new);
+        userRepository.findByUsernameAndAndPassword(request.getUsername(), request.getPassword()).orElseThrow(AttemptLoginException::new);
 
         return LoginResponse.builder()
                 .login(request.getUsername())
