@@ -1,9 +1,11 @@
 package com.sicredi.hackathon.social.service;
 
+import com.sicredi.hackathon.social.domain.ProjectStatus;
 import com.sicredi.hackathon.social.dto.request.EditProjectRequest;
 import com.sicredi.hackathon.social.dto.request.RegisterProjectRequest;
 import com.sicredi.hackathon.social.dto.response.RegisterProjectResponse;
 import com.sicredi.hackathon.social.entity.ProjectEntity;
+import com.sicredi.hackathon.social.entity.UserEntity;
 import com.sicredi.hackathon.social.exception.status.NotFoundException;
 import com.sicredi.hackathon.social.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +19,18 @@ public class ProjectService {
     @Autowired
     private ProjectRepository projectRepository;
 
+    @Autowired
+    private UserService userService;
+
     public RegisterProjectResponse register(final String username, final RegisterProjectRequest request) {
 
+        UserEntity owner = userService.findUserByUsername(username);
         ProjectEntity projectEntity = ProjectEntity.builder()
                 .title(request.getTitle())
                 .description(request.getDescription())
                 .type(request.getType())
+                .owner(owner)
+                .status(ProjectStatus.EM_ANDAMENTO)
                 .build();
 
         projectEntity = projectRepository.save(projectEntity);
