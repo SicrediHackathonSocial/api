@@ -6,6 +6,7 @@ import com.sicredi.hackathon.social.dto.request.AddValueGoalRequest;
 import com.sicredi.hackathon.social.dto.request.EditGoalRequest;
 import com.sicredi.hackathon.social.dto.request.RegisterGoalRequest;
 import com.sicredi.hackathon.social.dto.request.RegisterGoalsRequest;
+import com.sicredi.hackathon.social.dto.response.AddValueGoalResponse;
 import com.sicredi.hackathon.social.entity.ContribuitionEntity;
 import com.sicredi.hackathon.social.entity.GoalEntity;
 import com.sicredi.hackathon.social.entity.ProjectEntity;
@@ -44,7 +45,7 @@ public class GoalService {
 
     public ResponseEntity register(final String username, final RegisterGoalsRequest request) {
 
-        ProjectEntity projectEntity = projectService.find(username, request.getIdProject());
+        ProjectEntity projectEntity = projectService.find(request.getIdProject());
 
         List<GoalEntity> goals = request.getGoals().stream()
                 .map(requestGoal -> buildGoalEntity(requestGoal, projectEntity))
@@ -65,7 +66,7 @@ public class GoalService {
     }
 
     public ResponseEntity edit(final String username, final EditGoalRequest request) {
-        ProjectEntity projectEntity = projectService.find(username, request.getIdProject());
+        ProjectEntity projectEntity = projectService.find(request.getIdProject());
 
         GoalEntity goalEntity = GoalEntity.builder()
                 .id(request.getId())
@@ -91,10 +92,11 @@ public class GoalService {
         return goalEntity;
     }
 
-    public ResponseEntity addValue(final String username, final AddValueGoalRequest request) {
+    public AddValueGoalResponse addValue(final String username, final AddValueGoalRequest request) {
 
         UserEntity userEntity = userService.findUserByUsername(username);
         GoalEntity goalEntity = goalRepository.findById(request.getIdGoal()).orElseThrow(NotFoundException::new);
+        ProjectEntity project = goalEntity.getProject();
 
         ContribuitionEntity contribuitionEntity = ContribuitionEntity.builder()
                 .contribuitor(userEntity)
@@ -114,14 +116,16 @@ public class GoalService {
             goalEntity.setStatus(GoalStatus.CONCLUIDO);
             goalRepository.save(goalEntity);
 
-            ProjectEntity project = goalEntity.getProject();
             if (project.getGoals().stream().allMatch(goal -> goal.getStatus().equals(GoalStatus.CONCLUIDO))) {
                 project.setStatus(ProjectStatus.CONCLUIDO);
                 projectRepository.save(project);
             }
         }
 
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return AddValueGoalResponse.builder()
+                .projectStatus(project.getStatus())
+                .goalStatus(goalEntity.getStatus())
+                .build();
     }
 
     @Transactional
