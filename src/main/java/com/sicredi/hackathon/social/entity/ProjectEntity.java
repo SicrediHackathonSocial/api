@@ -1,5 +1,6 @@
 package com.sicredi.hackathon.social.entity;
 
+import com.sicredi.hackathon.social.domain.ProjectStatus;
 import com.sicredi.hackathon.social.domain.ProjectType;
 import lombok.*;
 
@@ -8,6 +9,8 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.sicredi.hackathon.social.domain.ProjectStatus.EM_ANDAMENTO;
 
 @Getter
 @Builder
@@ -38,6 +41,11 @@ public class ProjectEntity implements Serializable {
     @Column(name = "type", nullable = false)
     private ProjectType type;
 
+    @Setter
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private ProjectStatus status;
+
     @ManyToOne
     @JoinColumn(name = "id_owner", nullable = false)
     private UserEntity owner;
@@ -56,6 +64,7 @@ public class ProjectEntity implements Serializable {
         this.description = description;
         this.owner = owner;
         this.type = type;
+        this.status = EM_ANDAMENTO;
     }
 
     public ProjectEntity(final String title, final String description, final UserEntity owner, final ProjectType type, final List<UserEntity> contribuitors) {
@@ -64,6 +73,7 @@ public class ProjectEntity implements Serializable {
         this.owner = owner;
         this.type = type;
         this.contribuitors = contribuitors;
+        this.status = EM_ANDAMENTO;
     }
 
     @PrePersist

@@ -37,6 +37,7 @@ public class GoalEntity implements Serializable {
     @JoinColumn(name = "id_project", nullable = false)
     private ProjectEntity project;
 
+    @Setter
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private GoalStatus status;

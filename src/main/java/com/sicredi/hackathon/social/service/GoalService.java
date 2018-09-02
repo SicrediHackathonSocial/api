@@ -1,10 +1,11 @@
 package com.sicredi.hackathon.social.service;
 
+import com.sicredi.hackathon.social.domain.GoalStatus;
+import com.sicredi.hackathon.social.domain.ProjectStatus;
 import com.sicredi.hackathon.social.dto.request.AddValueGoalRequest;
 import com.sicredi.hackathon.social.dto.request.EditGoalRequest;
 import com.sicredi.hackathon.social.dto.request.RegisterGoalRequest;
 import com.sicredi.hackathon.social.dto.request.RegisterGoalsRequest;
-import com.sicredi.hackathon.social.dto.response.RegisterGoalResponse;
 import com.sicredi.hackathon.social.entity.ContribuitionEntity;
 import com.sicredi.hackathon.social.entity.GoalEntity;
 import com.sicredi.hackathon.social.entity.ProjectEntity;
@@ -12,13 +13,15 @@ import com.sicredi.hackathon.social.entity.UserEntity;
 import com.sicredi.hackathon.social.exception.status.NotFoundException;
 import com.sicredi.hackathon.social.repository.ContribuitionRepository;
 import com.sicredi.hackathon.social.repository.GoalRepository;
+import com.sicredi.hackathon.social.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,6 +29,9 @@ public class GoalService {
 
     @Autowired
     private GoalRepository goalRepository;
+
+    @Autowired
+    private ProjectRepository projectRepository;
 
     @Autowired
     private ProjectService projectService;
@@ -98,6 +104,39 @@ public class GoalService {
 
         contribuitionRepository.save(contribuitionEntity);
 
+        List<ContribuitionEntity> contribuitions = goalEntity.getContribuitions();
+
+        BigDecimal reached = contribuitions.stream()
+                .map(ContribuitionEntity::getValue)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        if (reached.compareTo(goalEntity.getTarget()) == 1) {
+            goalEntity.setStatus(GoalStatus.CONCLUIDO);
+            goalRepository.save(goalEntity);
+
+            ProjectEntity project = goalEntity.getProject();
+            if (project.getGoals().stream().allMatch(goal -> goal.getStatus().equals(GoalStatus.CONCLUIDO))) {
+                project.setStatus(ProjectStatus.CONCLUIDO);
+                projectRepository.save(project);
+            }
+        }
+
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @Transactional
+    public void createContribuition(final String username, final Long idGoal, final BigDecimal value) {
+
+        UserEntity userEntity = userService.findUserByUsername(username);
+        GoalEntity goalEntity = goalRepository.findById(idGoal).orElseThrow(NotFoundException::new);
+
+        ContribuitionEntity contribuitionEntity = ContribuitionEntity.builder()
+                .contribuitor(userEntity)
+                .goal(goalEntity)
+                .value(value)
+                .build();
+
+        contribuitionRepository.save(contribuitionEntity);
+
     }
 }
