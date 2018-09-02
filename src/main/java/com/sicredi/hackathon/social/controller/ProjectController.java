@@ -25,6 +25,13 @@ public class ProjectController {
         return projectService.register(username, request);
     }
 
+    @PostMapping("/membership/{project}/{member}")
+    public void addMember(@RequestHeader("Authorization") final String owner,
+                          @PathVariable("project") final Long idProject,
+                          @PathVariable("member") final String member) {
+        projectService.addMembership(owner, member, idProject);
+    }
+
     @PutMapping
     public ResponseEntity editProject(@RequestHeader(value = "Authorization", required = false) final String username, @RequestBody final EditProjectRequest request) {
         return projectService.edit(username, request);

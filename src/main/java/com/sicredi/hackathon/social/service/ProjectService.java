@@ -8,6 +8,8 @@ import com.sicredi.hackathon.social.dto.response.RegisterProjectResponse;
 import com.sicredi.hackathon.social.entity.GoalEntity;
 import com.sicredi.hackathon.social.entity.ProjectEntity;
 import com.sicredi.hackathon.social.entity.UserEntity;
+import com.sicredi.hackathon.social.exception.status.BadRequestException;
+import com.sicredi.hackathon.social.exception.status.ForbiddenException;
 import com.sicredi.hackathon.social.exception.status.NotFoundException;
 import com.sicredi.hackathon.social.repository.ContribuitionRepository;
 import com.sicredi.hackathon.social.repository.ProjectRepository;
@@ -110,6 +112,26 @@ public class ProjectService {
         projectRepository.delete(projectEntity);
 
         return projectEntity;
+    }
+
+    public void addMembership(final String owner, final String member, final Long idProject){
+        ProjectEntity project = find(idProject);
+
+        if (!project.getOwner().getUsername().equals(owner)){
+            throw new ForbiddenException();
+        }
+
+        if (!ProjectType.SHARED.equals(project.getType())){
+            throw new BadRequestException();
+        }
+
+        UserEntity user = userService.findUserByUsername(member);
+        if (project.getContribuitors().contains(user)){
+            throw new BadRequestException();
+        }
+
+        project.getContribuitors().add(user);
+        projectRepository.save(project);
     }
 }
 
