@@ -1,4 +1,5 @@
 # ARC
+[![Build Status](https://travis-ci.org/SicrediHackathonSocial/api.svg?branch=master)](https://travis-ci.org/SicrediHackathonSocial/api)
 
 ## Ambiente de Desenvolvimento
 
