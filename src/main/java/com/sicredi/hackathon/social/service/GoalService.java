@@ -115,7 +115,7 @@ public class GoalService {
                 .map(ContribuitionEntity::getValue)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        if (reached.compareTo(goalEntity.getTarget()) == 1) {
+        if (reached.compareTo(goalEntity.getTarget()) >= 0) {
             goalEntity.setStatus(GoalStatus.CONCLUIDO);
             goalRepository.save(goalEntity);
 
