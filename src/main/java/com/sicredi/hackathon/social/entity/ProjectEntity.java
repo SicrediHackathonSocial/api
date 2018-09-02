@@ -44,6 +44,9 @@ public class ProjectEntity implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "id_contribuitor"))
     private List<UserEntity> contribuitors;
 
+    @OneToMany(mappedBy = "project")
+    private List<GoalEntity> goals;
+
     public ProjectEntity(final String title, final String description, final UserEntity owner, final ProjectType type) {
         this.title = title;
         this.description = description;

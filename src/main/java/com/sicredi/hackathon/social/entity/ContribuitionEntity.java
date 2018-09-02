@@ -1,5 +1,6 @@
 package com.sicredi.hackathon.social.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -26,6 +27,7 @@ public class ContribuitionEntity implements Serializable {
     @JoinColumn(name = "id_contribuitor", nullable = false)
     private UserEntity contribuitor;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "id_goal", nullable = false)
     private GoalEntity goal;
