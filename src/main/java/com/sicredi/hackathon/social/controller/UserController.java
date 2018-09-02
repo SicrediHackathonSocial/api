@@ -37,7 +37,7 @@ public class UserController {
     }
 
     @GetMapping("/projects/public/{username}")
-    public List<ProjectEntity> findProjectsPublicByUsername(@PathVariable String username) {
+    public List<ProjectEntity> findProjectsPublicByUsername(@PathVariable("username") String username) {
         return userService.findProjectsPublicByUsername(username);
     }
 
@@ -59,6 +59,11 @@ public class UserController {
     @GetMapping("/following")
     public List<UserEntity> findFollowingByUserLogged(@RequestHeader("Authorization") String username) {
         return userService.findFollowingByUserLogged(username);
+    }
+
+    @GetMapping("/search/{username}")
+    public List<UserEntity> findByUsernameLike(@PathVariable("username") String username) {
+        return userService.findByUsernameLike(username);
     }
 
 }

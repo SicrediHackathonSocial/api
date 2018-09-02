@@ -20,4 +20,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     List<UserEntity> findByFollowersContains(UserEntity user);
 
+    List<UserEntity> findByUsernameIgnoreCaseLike(String username);
+
 }

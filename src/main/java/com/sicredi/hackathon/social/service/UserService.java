@@ -69,4 +69,9 @@ public class UserService {
         final UserEntity user = findUserByUsername(username);
         return userRepository.findByFollowersContains(user);
     }
+
+    public List<UserEntity> findByUsernameLike(final String username) {
+        return userRepository.findByUsernameIgnoreCaseLike(username);
+    }
+
 }
