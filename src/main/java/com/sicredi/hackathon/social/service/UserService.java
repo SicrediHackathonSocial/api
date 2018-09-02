@@ -49,7 +49,7 @@ public class UserService {
 
     public List<ProjectEntity> findProjectsSharedWithMe(final String username) {
         final UserEntity user = findUserByUsername(username);
-        return projectRepository.findAllByOwnerIsNotAndContribuitorsContains(user, user);
+        return projectRepository.findAllByOwnerAndTypeOrContribuitorsContains(user, ProjectType.SHARED, user);
     }
 
     public LoginResponse login(final LoginRequest request) {

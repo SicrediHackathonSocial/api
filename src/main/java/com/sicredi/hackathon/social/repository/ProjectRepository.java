@@ -20,7 +20,7 @@ public interface ProjectRepository extends JpaRepository<ProjectEntity, Long> {
 
     Optional<ProjectEntity> findByIdAndOwner_Username(Long id, String username);
 
-    List<ProjectEntity> findAllByOwnerIsNotAndContribuitorsContains(UserEntity user1, UserEntity user2);
+    List<ProjectEntity> findAllByOwnerAndTypeOrContribuitorsContains(UserEntity user1, ProjectType type , UserEntity user2);
 
     List<ProjectEntity> findAllByType(ProjectType type);
 
