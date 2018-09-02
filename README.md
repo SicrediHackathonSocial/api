@@ -21,8 +21,8 @@ Execute a api localmente e acesse o seguinte link:
 
 ### Setup inicial
 ```
-git clone https://github.com/alencarrh/AcademiaABC-Dev3.git
-cd AcademiaABC-Dev3/back
+https://github.com/SicrediHackathonSocial/api.git
+cd api
 ```
 
 ```
