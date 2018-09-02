@@ -25,11 +25,10 @@ public class ProjectController {
         return projectService.register(username, request);
     }
 
-    @PostMapping("/membership/{project}/{member}")
-    public void addMember(@RequestHeader("Authorization") final String owner,
-                          @PathVariable("project") final Long idProject,
-                          @PathVariable("member") final String member) {
-        projectService.addMembership(owner, member, idProject);
+    @PostMapping("/membership/{project}")
+    public void addMember(@RequestHeader("Authorization") final String user,
+                          @PathVariable("project") final Long idProject) {
+        projectService.addMembership(user, idProject);
     }
 
     @PutMapping

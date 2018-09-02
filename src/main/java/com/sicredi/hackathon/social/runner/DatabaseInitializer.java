@@ -63,7 +63,7 @@ public class DatabaseInitializer implements ApplicationRunner {
         ContribuitionEntity cArc1 = contribuitionRepository.save(new ContribuitionEntity(vanesa, ajudaGoal, valor("150")));
         ContribuitionEntity cArc2 = contribuitionRepository.save(new ContribuitionEntity(roberto, ajudaGoal, valor("15")));
 
-        ProjectEntity bike = projectRepository.save(new ProjectEntity("Minha Cross", "", roberto, ProjectType.PRIVATE));
+        ProjectEntity bike = projectRepository.save(new ProjectEntity("Minha Cross", "", roberto, ProjectType.SHARED));
         GoalEntity entradaBike = goalRepository.save(new GoalEntity("Entrada", valor("100.00"), bike));
         GoalEntity parcelasBike = goalRepository.save(new GoalEntity("Parcelas", valor("400.00"), bike));
         ContribuitionEntity c1 = contribuitionRepository.save(new ContribuitionEntity(roberto, parcelasBike, valor("150")));

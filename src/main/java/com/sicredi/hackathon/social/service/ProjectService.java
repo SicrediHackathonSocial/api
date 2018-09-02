@@ -114,10 +114,10 @@ public class ProjectService {
         return projectEntity;
     }
 
-    public void addMembership(final String owner, final String member, final Long idProject){
+    public void addMembership(final String username, final Long idProject){
         ProjectEntity project = find(idProject);
 
-        if (!project.getOwner().getUsername().equals(owner)){
+        if (project.getOwner().getUsername().equals(username)){
             throw new ForbiddenException();
         }
 
@@ -125,7 +125,7 @@ public class ProjectService {
             throw new BadRequestException();
         }
 
-        UserEntity user = userService.findUserByUsername(member);
+        UserEntity user = userService.findUserByUsername(username);
         if (project.getContribuitors().contains(user)){
             throw new BadRequestException();
         }
