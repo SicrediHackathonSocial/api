@@ -5,7 +5,6 @@ import com.sicredi.hackathon.social.domain.ProjectType;
 import com.sicredi.hackathon.social.dto.request.EditProjectRequest;
 import com.sicredi.hackathon.social.dto.request.RegisterProjectRequest;
 import com.sicredi.hackathon.social.dto.response.RegisterProjectResponse;
-import com.sicredi.hackathon.social.entity.ContribuitionEntity;
 import com.sicredi.hackathon.social.entity.GoalEntity;
 import com.sicredi.hackathon.social.entity.ProjectEntity;
 import com.sicredi.hackathon.social.entity.UserEntity;
@@ -17,8 +16,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class ProjectService {
@@ -73,13 +72,27 @@ public class ProjectService {
 
     public ProjectEntity findOnePublicProject(final String usernameOwner) {
 
-        final UserEntity user = userService.findUserByUsername(usernameOwner);
-        final List<ProjectEntity> publics = projectRepository.findAllByTypeWithoutUser(ProjectType.PUBLIC, usernameOwner);
+        UserEntity user = userService.findUserByUsername(usernameOwner);
+        List<ProjectEntity> publics;
 
-        return publics.stream()
-                .filter(p -> !p.getContribuitors().contains(user) && !isUserContribuitor(user, p.getGoals()))
-                .findFirst()
-                .orElseGet(null);
+        Integer random = new Random().nextInt();
+        System.out.println("Random " + random);
+        if (random % 2 == 0 && !usernameOwner.equalsIgnoreCase("ARC")){
+            publics = projectRepository.findAllByOwner_Username("ARC");
+            return publics.stream()
+                    .filter(p -> !p.getContribuitors().contains(user) && !isUserContribuitor(user, p.getGoals()))
+                    .findFirst()
+                    .orElseGet(() -> new ProjectEntity());
+        } else {
+            publics = projectRepository.findAllByTypeWithoutUser(ProjectType.PUBLIC, usernameOwner);
+            return publics.stream()
+                    .filter(p -> !p.getContribuitors().contains(user) &&
+                            !isUserContribuitor(user, p.getGoals()) &&
+                            !p.getOwner().getUsername().equalsIgnoreCase("ARC"))
+                    .findFirst()
+                    .orElseGet(() -> new ProjectEntity());
+
+        }
     }
 
     private Boolean isUserContribuitor(final UserEntity user, final List<GoalEntity> goals){

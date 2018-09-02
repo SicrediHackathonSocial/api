@@ -85,6 +85,10 @@ public class ProjectEntity implements Serializable {
 
     @JsonProperty("reached")
     private BigDecimal reached() {
+        if (getGoals() == null){
+            return new BigDecimal("0");
+        }
+
         getGoals().forEach(goal -> {
             goal.setReached(goal.getContribuitions().stream().map(ContribuitionEntity::getValue).reduce(BigDecimal.ZERO, BigDecimal::add));
         });
@@ -94,6 +98,10 @@ public class ProjectEntity implements Serializable {
 
     @JsonProperty("target")
     private BigDecimal target() {
+        if (getGoals() == null){
+            return new BigDecimal("0");
+        }
+
         return getGoals().stream().map(GoalEntity::getTarget).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }
