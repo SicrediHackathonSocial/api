@@ -14,7 +14,6 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Entity
 @Table(name = "contribuition")
-@ToString
 public class ContribuitionEntity implements Serializable {
 
     private static final long serialVersionUID = -6209633616891908052L;

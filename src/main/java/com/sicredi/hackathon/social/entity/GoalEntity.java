@@ -9,13 +9,13 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
+@Setter
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "goal")
-@ToString
 public class GoalEntity implements Serializable {
 
 
@@ -31,6 +31,9 @@ public class GoalEntity implements Serializable {
 
     @Column(nullable = false)
     private BigDecimal target;
+
+    @Transient
+    private BigDecimal reached = BigDecimal.ZERO;
 
     @JsonIgnore
     @ManyToOne

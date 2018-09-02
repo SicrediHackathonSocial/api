@@ -6,19 +6,20 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.sicredi.hackathon.social.domain.ProjectStatus.EM_ANDAMENTO;
 
+@Setter
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "project")
-@ToString
 public class ProjectEntity implements Serializable {
 
     private static final long serialVersionUID = -7688722208070330673L;
@@ -36,6 +37,12 @@ public class ProjectEntity implements Serializable {
 
     @Column(nullable = false)
     private LocalDate createdDate;
+
+    @Transient
+    private BigDecimal target;
+
+    @Transient
+    private BigDecimal reached;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type", nullable = false)

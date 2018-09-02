@@ -5,6 +5,7 @@ import com.sicredi.hackathon.social.domain.ProjectType;
 import com.sicredi.hackathon.social.dto.request.EditProjectRequest;
 import com.sicredi.hackathon.social.dto.request.RegisterProjectRequest;
 import com.sicredi.hackathon.social.dto.response.RegisterProjectResponse;
+import com.sicredi.hackathon.social.entity.ContribuitionEntity;
 import com.sicredi.hackathon.social.entity.GoalEntity;
 import com.sicredi.hackathon.social.entity.ProjectEntity;
 import com.sicredi.hackathon.social.entity.UserEntity;
@@ -16,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -63,7 +65,17 @@ public class ProjectService {
     }
 
     public ProjectEntity find(final Long id) {
-        return projectRepository.findById(id).orElseThrow(NotFoundException::new);
+        ProjectEntity project = projectRepository.findById(id).orElseThrow(NotFoundException::new);
+
+        project.getGoals().forEach(goal -> {
+            goal.setReached(goal.getContribuitions().stream().map(ContribuitionEntity::getValue).reduce(BigDecimal.ZERO, BigDecimal::add));
+        });
+
+        project.setReached(project.getGoals().stream().map(GoalEntity::getReached).reduce(BigDecimal.ZERO, BigDecimal::add));
+        project.setTarget(project.getGoals().stream().map(GoalEntity::getTarget).reduce(BigDecimal.ZERO, BigDecimal::add));
+
+        return project;
+
     }
 
     public ProjectEntity findOnePublicProject(final String usernameOwner) {

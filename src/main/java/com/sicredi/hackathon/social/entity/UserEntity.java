@@ -15,7 +15,6 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "user")
-@ToString
 public class UserEntity implements Serializable {
 
     private static final long serialVersionUID = 7366539098994678983L;
