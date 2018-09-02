@@ -1,6 +1,7 @@
 package com.sicredi.hackathon.social.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sicredi.hackathon.social.domain.GoalStatus;
 import lombok.*;
 
@@ -54,4 +55,10 @@ public class GoalEntity implements Serializable {
         this.project = project;
         this.status = GoalStatus.EM_ANDAMENTO;
     }
+
+    @JsonProperty("reached")
+    private BigDecimal reached() {
+        return getContribuitions().stream().map(ContribuitionEntity::getValue).reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
+
 }
