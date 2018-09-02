@@ -14,6 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
+import static java.util.Objects.isNull;
+import static org.apache.commons.lang3.BooleanUtils.isFalse;
 
 @Service
 public class UserService {
@@ -53,7 +57,17 @@ public class UserService {
     }
 
     public LoginResponse login(final LoginRequest request) {
-        userRepository.findByUsernameAndAndPassword(request.getUsername(), request.getPassword()).orElseThrow(AttemptLoginException::new);
+
+        Optional<UserEntity> user = userRepository.findByUsername(request.getUsername());
+
+        if(isFalse(user.isPresent())){
+            UserEntity newUser = UserEntity.builder()
+                    .username(request.getUsername())
+                    .password("naotem")
+                    .build();
+
+            userRepository.save(newUser);
+        }
 
         return LoginResponse.builder()
                 .login(request.getUsername())
