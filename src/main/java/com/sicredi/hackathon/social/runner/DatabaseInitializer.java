@@ -48,7 +48,7 @@ public class DatabaseInitializer implements ApplicationRunner {
         UserEntity felizardo = userRepository.save(new UserEntity("happyzardo", "feliz4567"));
         UserEntity joao = userRepository.save(new UserEntity("joaozito", "jojo12"));
         UserEntity catia = userRepository.save(new UserEntity("Ca_Santos", "santosss"));
-        UserEntity fran = userRepository.save(new UserEntity("marquinhos", "123456"));
+        UserEntity fran = userRepository.save(new UserEntity("fran", "123456"));
         UserEntity luis = userRepository.save(new UserEntity("luisinho", "ll1234"));
         UserEntity carla = userRepository.save(new UserEntity("carlaroberta", "umataldecarla"));
         UserEntity amanda = userRepository.save(new UserEntity("Amandaama", "ama5555"));
