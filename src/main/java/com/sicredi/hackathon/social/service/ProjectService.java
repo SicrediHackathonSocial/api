@@ -67,13 +67,6 @@ public class ProjectService {
     public ProjectEntity find(final Long id) {
         ProjectEntity project = projectRepository.findById(id).orElseThrow(NotFoundException::new);
 
-        project.getGoals().forEach(goal -> {
-            goal.setReached(goal.getContribuitions().stream().map(ContribuitionEntity::getValue).reduce(BigDecimal.ZERO, BigDecimal::add));
-        });
-
-        project.setReached(project.getGoals().stream().map(GoalEntity::getReached).reduce(BigDecimal.ZERO, BigDecimal::add));
-        project.setTarget(project.getGoals().stream().map(GoalEntity::getTarget).reduce(BigDecimal.ZERO, BigDecimal::add));
-
         return project;
 
     }
@@ -91,9 +84,7 @@ public class ProjectService {
 
     private Boolean isUserContribuitor(final UserEntity user, final List<GoalEntity> goals){
         return goals.stream()
-                .filter(g -> g.getContribuitions().stream().filter(c -> c.getContribuitor().equals(user)).findFirst().isPresent())
-                .findFirst()
-                .isPresent();
+                .anyMatch(g -> g.getContribuitions().stream().anyMatch(c -> c.getContribuitor().equals(user)));
     }
 
     public List<ProjectEntity> findAllPublic() {
