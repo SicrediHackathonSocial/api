@@ -1,28 +1,8 @@
 package com.sicredi.hackathon.social.exception.status;
 
-import java.util.Map;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-public class AttemptLoginException extends HttpStatusException {
-
-    private static final long serialVersionUID = 5940827100601560564L;
-
-    public AttemptLoginException() {
-    }
-
-    public AttemptLoginException(final String message) {
-        super(message);
-    }
-
-    public AttemptLoginException(final String key, final String value) {
-        super(key, value);
-    }
-
-    public AttemptLoginException(final Map<String, String> additionalInformation) {
-        super(additionalInformation);
-    }
-
-    @Override
-    public int getStatusCode() {
-        return 401;
-    }
+@ResponseStatus(code = HttpStatus.FORBIDDEN)
+public class AttemptLoginException {
 }
